@@ -3,11 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Vertical Pulse Lines — 5-Line (Yellow + Down/Up Cycle)</title>
-
-<!-- Animate.css (v4) -->
-<link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+<title>Vertical Pulse Lines — 5-Line (Yellow Down/Up + Pauses)</title>
 
 <style>
   /* Reset */
@@ -26,33 +22,33 @@
     overflow: hidden;            /* hide pulses as they leave viewport */
   }
 
-  /* Field of lines */
-  .lines{
+  /* Field of lines (unchanged layout) */
+  .lines {
     position: absolute;
-    inset: 0 auto 0 auto;
+    top: 0; left: 0; right: 0;
     height: 100%;
     margin: auto;
-    width: 90vw;                 /* adjust field width if you want wider/narrower */
+    width: 90vw;
   }
 
-  /* Single line */
-  .line{
+  /* Single line (unchanged) */
+  .line {
     position: absolute;
     width: 1px;
     height: 100%;
     top: 0;
     left: 50%;
-    background: rgba(255,255,255,0.16); /* slightly brighter base line */
+    background: rgba(255,255,255,0.16);
     overflow: hidden;
   }
 
-  /* Traveling pulse (yellow), now with down → pause → up → pause cycle */
+  /* Yellow traveling pulse — now down → pause → up → pause */
   .line::after{
     content: '';
     position: absolute;
     left: 0; width: 100%;
-    height: 20vh;                /* a touch longer for readability */
-    top: -50%;                   /* start above */
+    height: 20vh;                /* slightly longer so it reads */
+    top: -50%;
     background: linear-gradient(
       to bottom,
       rgba(255,255,255,0) 0%,
@@ -61,38 +57,33 @@
       rgba(255,212,0,.28) 100%
     );
     filter: blur(18px);
-    animation-name: dropRise;    /* new cycle animation */
-    animation-duration: 12s;     /* slower + includes pauses */
-    animation-delay: 0s;
-    animation-iteration-count: infinite;
-    animation-fill-mode: both;
-    animation-timing-function: cubic-bezier(0.4,0.26,0,0.97);
+    animation: dropRise 12s cubic-bezier(0.4, 0.26, 0, 0.97) infinite both;
   }
 
-  /* Position the 5 lines around the center */
+  /* Position the 5 lines around the center (unchanged idea) */
   .line:nth-child(1){ margin-left: -40%; }  /* far left  */
   .line:nth-child(2){ margin-left: -20%; }  /* left      */
   .line:nth-child(3){ margin-left:   0%; }  /* center    */
   .line:nth-child(4){ margin-left:  20%; }  /* right     */
   .line:nth-child(5){ margin-left:  40%; }  /* far right */
 
-  /* Stagger pulse start times for variety (kept from your version) */
+  /* Stagger pulse starts (same style you used) */
   .line:nth-child(1)::after{ animation-delay: 1.6s; }
   .line:nth-child(2)::after{ animation-delay: 2.0s; }
   .line:nth-child(3)::after{ animation-delay: 2.3s; }
   .line:nth-child(4)::after{ animation-delay: 2.6s; }
   .line:nth-child(5)::after{ animation-delay: 2.9s; }
 
-  /* Down → pause → Up → pause */
+  /* Down → pause → Up → pause (percent-based like your original) */
   @keyframes dropRise {
-    0%   { top: -50%; }
-    40%  { top: 110%; }  /* fall */
-    50%  { top: 110%; }  /* pause at bottom */
-    90%  { top: -50%; }  /* rise */
-    100% { top: -50%; }  /* pause at top */
+    0%   { top: -50%; }   /* start above */
+    40%  { top: 110%; }   /* fall */
+    50%  { top: 110%; }   /* pause at bottom */
+    90%  { top: -50%; }   /* rise */
+    100% { top: -50%; }   /* pause at top */
   }
 
-  /* Respect reduced motion */
+  /* Optional: if your OS has “reduce motion” on and you still want this, delete this block */
   @media (prefers-reduced-motion: reduce){
     .line::after{ animation: none !important; }
   }
@@ -100,15 +91,14 @@
 </head>
 <body>
 
-  <!-- Animate.css entrance effects (optional) -->
-  <div class="lines animate__animated animate__fadeIn animate__slower"
-       style="--animate-duration:1.6s;">
-    <div class="line animate__animated animate__fadeInLeft"  style="--animate-delay:.10s;"></div>
-    <div class="line animate__animated animate__fadeInLeft"  style="--animate-delay:.20s;"></div>
-    <div class="line animate__animated animate__fadeInDown"  style="--animate-delay:.30s;"></div>
-    <div class="line animate__animated animate__fadeInRight" style="--animate-delay:.40s;"></div>
-    <div class="line animate__animated animate__fadeInRight" style="--animate-delay:.50s;"></div>
+  <div class="lines" aria-hidden="true">
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
+    <div class="line"></div>
   </div>
 
 </body>
 </html>
+
