@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Vertical Pulse Lines — 5-Line Version</title>
+<title>Vertical Pulse Lines + Animate.css</title>
 
 <!-- Animate.css (v4) -->
 <link rel="stylesheet"
@@ -29,10 +29,10 @@
   /* Field of lines */
   .lines{
     position: absolute;
-    inset: 0 auto 0 auto;
+    inset: 0 auto 0 auto;       /* top:0; bottom:0; center horizontally via width + margin */
     height: 100%;
     margin: auto;
-    width: 90vw;                 /* adjust field width if you want wider/narrower */
+    width: 90vw;                 /* adjust field width */
   }
 
   /* Single line */
@@ -46,7 +46,7 @@
     overflow: hidden;
   }
 
-  /* Traveling pulse */
+  /* Traveling pulse (converted from SCSS to CSS) */
   .line::after{
     content: '';
     position: absolute;
@@ -67,26 +67,19 @@
     animation-timing-function: cubic-bezier(0.4, 0.26, 0, 0.97);
   }
 
-  /* Position the 5 lines around the center */
-  .line:nth-child(1){ margin-left: -40%; }  /* far left  */
-  .line:nth-child(2){ margin-left: -20%; }  /* left      */
-  .line:nth-child(3){ margin-left:   0%; }  /* center    */
-  .line:nth-child(4){ margin-left:  20%; }  /* right     */
-  .line:nth-child(5){ margin-left:  40%; }  /* far right */
+  /* Offsets & delays for 1st and 3rd line like your original */
+  .line:nth-child(1){ margin-left: -25%; }
+  .line:nth-child(1)::after{ animation-delay: 2s; }
 
-  /* Stagger pulse start times for variety */
-  .line:nth-child(1)::after{ animation-delay: 1.6s; }
-  .line:nth-child(2)::after{ animation-delay: 2.0s; }
-  .line:nth-child(3)::after{ animation-delay: 2.3s; }
-  .line:nth-child(4)::after{ animation-delay: 2.6s; }
-  .line:nth-child(5)::after{ animation-delay: 2.9s; }
+  .line:nth-child(3){ margin-left: 25%; }
+  .line:nth-child(3)::after{ animation-delay: 2.5s; }
 
   @keyframes drop {
     0%   { top: -50%; }
     100% { top: 110%; }
   }
 
-  /* Respect reduced motion */
+  /* Respect reduced motion for the pulse animation */
   @media (prefers-reduced-motion: reduce){
     .line::after{ animation: none !important; }
   }
@@ -94,14 +87,17 @@
 </head>
 <body>
 
-  <!-- Animate.css entrance effects (optional) -->
+  <!-- Add Animate.css classes for entrance effects (optional delays per element) -->
   <div class="lines animate__animated animate__fadeIn animate__slower"
        style="--animate-duration:1.6s;">
-    <div class="line animate__animated animate__fadeInLeft"  style="--animate-delay:.10s;"></div>
-    <div class="line animate__animated animate__fadeInLeft"  style="--animate-delay:.20s;"></div>
-    <div class="line animate__animated animate__fadeInDown"  style="--animate-delay:.30s;"></div>
-    <div class="line animate__animated animate__fadeInRight" style="--animate-delay:.40s;"></div>
-    <div class="line animate__animated animate__fadeInRight" style="--animate-delay:.50s;"></div>
+    <div class="line animate__animated animate__fadeInLeft"
+         style="--animate-delay:.15s;"></div>
+
+    <div class="line animate__animated animate__fadeInDown"
+         style="--animate-delay:.30s;"></div>
+
+    <div class="line animate__animated animate__fadeInRight"
+         style="--animate-delay:.45s;"></div>
   </div>
 
 </body>
